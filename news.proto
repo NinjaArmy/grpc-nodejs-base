@@ -1,0 +1,40 @@
+/* This is where the magic happens 
+   Protocol Buffers are language and platfrom neutral
+   We define our service definitions and messages here.
+   This is written in IDL (Interface Definition Language) --> it's like an interface between the client and server
+
+*/
+syntax = "proto3";
+
+/* Defining a News item */
+message News {
+    string id = 1;
+    string title = 2;
+    string body = 3;
+    string postImage = 4;
+}
+
+/* Defining RPC service
+   The protocol buffer compiler will generate service interface code and stubs in our chosen language. 
+ */
+service NewsService {
+    /* requires an empty object as argument and return an arry/list of News */
+    rpc GetAllNews (Empty) returns (NewsList) {}
+
+    /* requires the NewsId as argument and returns the News Object.. */
+    rpc GetNews (NewsId) returns (News) {}
+    rpc AddNews (News) returns (News) {}
+    rpc EditNews (News) returns (News) {}
+    rpc DeleteNews (NewsId) returns (Empty) {}
+}
+
+message NewsId {
+    string id = 1;
+}
+
+message Empty {}
+
+message NewsList {
+   repeated News news = 1;
+}
+
